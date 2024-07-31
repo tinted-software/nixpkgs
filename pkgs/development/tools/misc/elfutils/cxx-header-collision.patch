@@ -1,0 +1,13 @@
+--- a/src/Makefile.am	2024-07-30 20:42:15.550064038 -0700
++++ b/src/Makefile.am	2024-07-30 20:42:59.776326475 -0700
+@@ -19,7 +19,9 @@
+ include $(top_srcdir)/config/eu.am
+ DEFS += $(YYDEBUG) -DDEBUGPRED=@DEBUGPRED@ \
+ 	-DSRCDIR=\"$(shell cd $(srcdir);pwd)\" -DOBJDIR=\"$(shell pwd)\"
+-AM_CPPFLAGS += -I$(srcdir)/../libelf -I$(srcdir)/../libebl \
++DEFAULT_INCLUDES = -I$(top_builddir)
++AM_CPPFLAGS = -I$(top_srcdir)/lib -I.. \
++			-I$(srcdir)/../libelf -I$(srcdir)/../libebl \
+ 	    -I$(srcdir)/../libdw -I$(srcdir)/../libdwelf \
+ 	    -I$(srcdir)/../libdwfl -I$(srcdir)/../libasm -I../debuginfod
+ 
