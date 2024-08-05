@@ -30,6 +30,9 @@ let
       cp -r ${monorepoSrc}/clang-tools-extra "$out"
     '' else src;
 
+  # Note: useLLVM is likely false for Darwin but true under pkgsLLVM
+  useLLVM = stdenv.hostPlatform.useLLVM or false;
+
   self = stdenv.mkDerivation (finalAttrs: rec {
     inherit pname version patches;
 

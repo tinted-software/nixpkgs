@@ -29,9 +29,6 @@ let
   cxxabiName = "lib${if cxxabi == null then "cxxabi" else cxxabi.libName}";
   runtimes = [ "libcxx" ] ++ lib.optional (cxxabi == null) "libcxxabi";
 
-  # Note: useLLVM is likely false for Darwin but true under pkgsLLVM
-  useLLVM = stdenv.hostPlatform.useLLVM or false;
-
   src' = if monorepoSrc != null then
     runCommand "${pname}-src-${version}" {} (''
       mkdir -p "$out/llvm"
