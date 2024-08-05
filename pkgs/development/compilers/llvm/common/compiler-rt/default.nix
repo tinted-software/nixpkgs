@@ -81,6 +81,7 @@ stdenv.mkDerivation ({
   ]);
 
   cmakeFlags = [
+    "-DCOMPILER_RT_BUILD_CTX_PROFILE=OFF"
     "-DCOMPILER_RT_DEFAULT_TARGET_ONLY=ON"
     "-DCMAKE_C_COMPILER_TARGET=${stdenv.hostPlatform.config}"
     "-DCMAKE_ASM_COMPILER_TARGET=${stdenv.hostPlatform.config}"
