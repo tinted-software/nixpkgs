@@ -216,6 +216,19 @@ let
       };
     } else throw "Musl libc only supports 64-bit Linux systems.";
 
+    pkgsUutils = nixpkgsFun {
+      overlays = [
+        (self': super': {
+          pkgsUutils = super';
+        })
+      ] ++ overlays;
+      # due to the increased size of the stdenv we need to cheat a bit
+      crossSystem = stdenv.hostPlatform // {
+        useUutilsCoreutils = true;
+        config = "${stdenv.hostPlatform.linuxArch}-pc-linux-gnu";
+      };
+    };
+
     # All packages built for i686 Linux.
     # Used by wine, firefox with debugging version of Flash, ...
     pkgsi686Linux = if stdenv.hostPlatform.isLinux && stdenv.hostPlatform.isx86 then nixpkgsFun {
