@@ -69,6 +69,11 @@ rustPlatform.buildRustPackage.override {
     runHook postInstallCheck
   '';
 
+  # https://github.com/alexcrichton/nghttp2-rs/issues/2
+  patches = [
+    ./cargo-http2.diff
+  ];
+
   meta = with lib; {
     homepage = "https://crates.io";
     description = "Downloads your Rust project's dependencies and builds your project";
@@ -76,8 +81,6 @@ rustPlatform.buildRustPackage.override {
     maintainers = teams.rust.members;
     license = [ licenses.mit licenses.asl20 ];
     platforms = platforms.unix;
-    # https://github.com/alexcrichton/nghttp2-rs/issues/2
-    broken = stdenv.hostPlatform.isx86 && stdenv.buildPlatform != stdenv.hostPlatform;
   };
 }
 // lib.optionalAttrs (stdenv.buildPlatform.rust.rustcTarget != stdenv.hostPlatform.rust.rustcTarget) {
