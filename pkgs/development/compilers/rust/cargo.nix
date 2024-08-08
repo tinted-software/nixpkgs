@@ -71,7 +71,8 @@ rustPlatform.buildRustPackage.override {
 
   # https://github.com/alexcrichton/nghttp2-rs/issues/2
   patches = [
-    ./cargo-http2.diff
+    # FIXME: cargo patch not working
+    #./cargo-http2.diff
   ];
 
   meta = with lib; {
