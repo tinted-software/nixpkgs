@@ -1358,6 +1358,7 @@ in
   sysinit-reactivation = runTest ./sysinit-reactivation.nix;
   systemd = runTest ./systemd.nix;
   systemd-analyze = runTest ./systemd-analyze.nix;
+  sysfs = runTest ./sysfs.nix;
   systemd-binfmt = handleTestOn [ "x86_64-linux" ] ./systemd-binfmt.nix { };
   systemd-boot = handleTest ./systemd-boot.nix { };
   systemd-bpf = runTest ./systemd-bpf.nix;
