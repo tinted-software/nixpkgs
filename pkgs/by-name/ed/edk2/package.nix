@@ -30,7 +30,13 @@ let
     else
       throw "Unsupported architecture";
 
-  buildType = if stdenv.hostPlatform.isDarwin then "CLANGPDB" else "GCC5";
+  buildType =
+    if stdenv.cc.bintools.isLLVM then
+      "CLANGDWARF"
+    else if stdenv.hostPlatform.isDarwin then
+      "CLANGPDB"
+    else
+      "GCC5";
 
   edk2 = stdenv.mkDerivation {
     pname = "edk2";
