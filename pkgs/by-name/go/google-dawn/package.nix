@@ -4,9 +4,9 @@
   fetchgit,
   cmake,
   pkg-config,
+  ninja,
   python3,
-  xorg,
-  apple-sdk_14,
+  glfw,
   callPackage,
 }:
 let
@@ -15,34 +15,29 @@ let
 in
 stdenv.mkDerivation {
   name = "google-dawn";
-  version = "chromium/6988";
+  version = "chromium/7144";
   src = fetchgit {
     url = "https://dawn.googlesource.com/dawn";
-    rev = "9fdc31a111440f5e411a0082a7001763226aff51";
-    sha256 = "sha256-yBqV3PG5LQqK0NQ++h86HMlgQUFYMh+O4N1/rcOcYBg=";
+    rev = "7ffa7f79728d68e24e61ed9b8a3c4ad6f37aec8b";
+    sha256 = "sha256-h48ua0Ffz2dcBll2JptxXeome3OHQEB+e3sDDio19UE=";
     fetchSubmodules = false;
   };
 
-  buildInputs =
-    [
-    ]
-    ++ lib.optionals stdenv.hostPlatform.isDarwin [
-      apple-sdk_14
-    ]
-    ++ lib.optionals (!stdenv.hostPlatform.isDarwin) [
-      xorg.libX11
-    ]
-    ++ (map (sm: fetchgit sm.src) submods);
+  buildInputs = [
+    glfw
+  ] ++ (map (sm: fetchgit sm.src) submods);
 
   nativeBuildInputs = [
     cmake
+    ninja
     pyEnv
     pkg-config
   ];
   cmakeFlags = [
+    "-GNinja"
     "-DBUILD_SHARED_LIBS=OFF"
     "-DDAWN_BUILD_SAMPLES=OFF"
-    "-DDAWN_USE_GLFW=OFF"
+    "-DDAWN_USE_GLFW=ON"
     "-DDAWN_BUILD_PROTOBUF=OFF"
     "-DDAWN_FETCH_DEPENDENCIES=OFF"
     "-DTINT_BUILD_CMD_TOOLS=OFF"
