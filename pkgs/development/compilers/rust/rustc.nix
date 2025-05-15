@@ -24,7 +24,6 @@
   xz,
   zlib,
   bintools,
-  libiconv,
   which,
   libffi,
   withBundledLLVM ? false,
@@ -346,7 +345,6 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs =
     [ openssl ]
     ++ optionals stdenv.hostPlatform.isDarwin [
-      libiconv
       zlib
     ]
     ++ optional (!withBundledLLVM) llvmShared.lib
