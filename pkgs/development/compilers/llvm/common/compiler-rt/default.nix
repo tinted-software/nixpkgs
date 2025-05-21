@@ -159,7 +159,10 @@ stdenv.mkDerivation (finalAttrs: {
       url = "https://github.com/llvm/llvm-project/pull/99837/commits/14ae0a660a38e1feb151928a14f35ff0f4487351.patch";
       hash = "sha256-JykABCaNNhYhZQxCvKiBn54DZ5ZguksgCHnpdwWF2no=";
       relative = "compiler-rt";
-    });
+    })
+    ++ lib.optionals (lib.versionAtLeast release_version "20") [
+      (getVersionFile "compiler-rt/libc-free.patch")
+    ];
 
   nativeBuildInputs = [
     cmake
@@ -247,7 +250,6 @@ stdenv.mkDerivation (finalAttrs: {
     lib.optionals (lib.versionAtLeast release_version "16") [
       (lib.cmakeFeature "CMAKE_LIPO" "${lib.getBin stdenv.cc.bintools.bintools}/bin/${stdenv.cc.targetPrefix}lipo")
     ]
-<<<<<<< HEAD
     ++ lib.optionals (!haveLibcxx) [
       # Darwin fails to detect that the compiler supports the `-g` flag when there is no libc++ during the
       # compiler-rt bootstrap, which prevents compiler-rt from building. The `-g` flag is required by the
