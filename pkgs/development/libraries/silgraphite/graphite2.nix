@@ -15,10 +15,8 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "graphite2";
 
   src = fetchurl {
-    url =
-      with finalAttrs;
-      "https://github.com/silnrsi/graphite/releases/download/${version}/${pname}-${version}.tgz";
-    sha256 = "1790ajyhk0ax8xxamnrk176gc9gvhadzy78qia4rd8jzm89ir7gr";
+    url = "https://github.com/heirecka/graphite/archive/require-cmake-3.5.tar.gz";
+    hash = "sha256-htCVVkfkztDleeUgx/YMHF6vCQ48ix/6s5DZnkvN/vc=";
   };
 
   outputs = [
