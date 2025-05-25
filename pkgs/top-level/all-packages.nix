@@ -6130,9 +6130,9 @@ with pkgs;
 
   swi-prolog-gui = swi-prolog.override { withGui = true; };
 
-  tbb_2020_3 = callPackage ../development/libraries/tbb/2020_3.nix { };
-  tbb_2021_11 = callPackage ../development/libraries/tbb { };
   tbb_2022_0 = callPackage ../development/libraries/tbb/2022_0.nix { };
+  tbb_2020_3 = tbb_2022_0;
+  tbb_2021_11 = tbb_2022_0;
   # Needed for CMake 4.0
   tbb = tbb_2022_0;
 
