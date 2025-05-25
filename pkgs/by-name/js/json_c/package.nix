@@ -3,6 +3,7 @@
   stdenv,
   fetchFromGitHub,
   cmake,
+  fetchpatch,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -19,6 +20,14 @@ stdenv.mkDerivation (finalAttrs: {
   outputs = [
     "out"
     "dev"
+  ];
+
+  patches = [
+    # CMake 4.0.0 support
+    (fetchpatch {
+      url = "https://github.com/json-c/json-c/pull/888.patch";
+      hash = "sha256-v4Nrb6e+DqCoinNgmwY1oer+1Tdcv1VY6BRny2XCMH8=";
+    })
   ];
 
   nativeBuildInputs = [ cmake ];
