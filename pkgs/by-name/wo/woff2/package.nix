@@ -10,13 +10,13 @@
 
 stdenv.mkDerivation rec {
   pname = "woff2";
-  version = "1.0.2";
+  version = "82ef3229b13b0741bb320412cbda4d43173abf3f";
 
   src = fetchFromGitHub {
-    owner = "google";
+    owner = "tinted-software";
     repo = "woff2";
-    rev = "v${version}";
-    sha256 = "13l4g536h0pr84ww4wxs2za439s0xp1va55g6l478rfbb1spp44y";
+    rev = "${version}";
+    hash = "sha256-7RQMwDPZ0wSwAXamhHPkB64BqGswD36y0n4h+H31zec=";
   };
 
   outputs = [
