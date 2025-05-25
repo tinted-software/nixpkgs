@@ -2,6 +2,7 @@
   lib,
   stdenv,
   fetchFromGitHub,
+  fetchpatch,
   cmake,
   cmocka,
 
@@ -26,6 +27,14 @@ stdenv.mkDerivation (finalAttrs: {
   outputs = [
     "out"
     "dev"
+  ];
+
+  # CMake 4.0 support
+  patches = [
+    (fetchpatch {
+      url = "https://github.com/PJK/libcbor/pull/355.patch";
+      hash = "sha256-WkMqN/sDZD1BJSjHi2mukDCScEQ7LPIPsSBEEm5LvCE=";
+    })
   ];
 
   strictDeps = true;
