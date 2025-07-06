@@ -2,10 +2,10 @@
   lib,
   stdenv,
   fetchFromGitHub,
-  fetchpatch,
   autogen,
   autoconf,
   automake,
+  autoreconfHook,
   # By default, jemalloc puts a je_ prefix onto all its symbols on OSX, which
   # then stops downstream builds (mariadb in particular) from detecting it. This
   # option should remove the prefix and give us a working jemalloc.
@@ -20,24 +20,15 @@ stdenv.mkDerivation rec {
   version = "5.3.0";
 
   src = fetchFromGitHub {
-    owner = "jemalloc";
+    owner = "facebook";
     repo = "jemalloc";
-    tag = version;
-    hash = "sha256-bb0OhZVXyvN+hf9BpPSykn5cGm87a0C+Y/iXKt9wTSs=";
+    rev = "fb52eac3720b09b4fc163878e7770336f1b6e7f8";
+    hash = "sha256-cVBGo3Qm7jxiJE1qWjiSByXlQvRuGoS+yyGTu3GhA0o=";
+    # TODO: upstream to nixpkgs: https://github.com/facebook/jemalloc/issues/15
+    # tag = version;
   };
 
   patches = [
-    # fix tests under --with-jemalloc-prefix=, see https://github.com/jemalloc/jemalloc/pull/2340
-    (fetchpatch {
-      url = "https://github.com/jemalloc/jemalloc/commit/d00ecee6a8dfa90afcb1bbc0858985c17bef6559.patch";
-      hash = "sha256-N5i4IxGJ4SSAgFiq5oGRnrNeegdk2flw9Sh2mP0yl4c=";
-    })
-    # fix linking with libc++, can be removed in the next update (after 5.3.0).
-    # https://github.com/jemalloc/jemalloc/pull/2348
-    (fetchpatch {
-      url = "https://github.com/jemalloc/jemalloc/commit/4422f88d17404944a312825a1aec96cd9dc6c165.patch";
-      hash = "sha256-dunkE7XHzltn5bOb/rSHqzpRniAFuGubBStJeCxh0xo=";
-    })
     # -O3 appears to introduce an unreproducibility where
     # `rtree_read.constprop.0` shows up in some builds but
     # not others, so we fall back to O2:
@@ -48,11 +39,8 @@ stdenv.mkDerivation rec {
     autogen
     autoconf
     automake
+    autoreconfHook
   ];
-
-  # TODO: switch to autoreconfHook when updating beyond 5.3.0
-  # https://github.com/jemalloc/jemalloc/issues/2346
-  configureScript = "./autogen.sh";
 
   configureFlags =
     [
@@ -95,7 +83,7 @@ stdenv.mkDerivation rec {
   '';
 
   # Parallel builds break reproducibility.
-  enableParallelBuilding = false;
+  enableParallelBuilding = true;
 
   meta = with lib; {
     homepage = "https://jemalloc.net/";
