@@ -172,6 +172,8 @@ stdenv.mkDerivation (finalAttrs: {
       (getVersionFile "compiler-rt/libc-free.patch")
     ]
     ++ lib.optional (!haveLibc && isAndroid) [
+      # Patch to get compiler-rt-no-libc building for Android, being
+      # upstreamed: https://github.com/llvm/llvm-project/pull/152394
       ./no-libc-android.patch
     ];
 
