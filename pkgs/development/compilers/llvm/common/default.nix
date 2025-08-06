@@ -384,7 +384,13 @@ makeScopeWithSplicing' {
             if args.stdenv.hostPlatform.isDarwin then
               overrideCC darwin.bootstrapStdenv buildLlvmPackages.clangWithLibcAndBasicRtAndLibcxx
             else if args.stdenv.hostPlatform.useLLVM or false then
-              overrideCC args.stdenv buildLlvmPackages.clangWithLibcAndBasicRtAndLibcxx
+              if args.stdenv.hostPlatform.isAndroid then
+                # compiler-rt-no-libc isn't needed for compiler-rt-libc's build on Android
+                overrideCC args.stdenv buildLlvmPackages.clangNoCompilerRtWithLibc
+              else
+                # `libxcrypt` fails to build without compiler-rt
+                # See: https://github.com/NixOS/nixpkgs/pull/431477#discussion_r2263654078 2Code has comments. Press enter to view.
+                overrideCC args.stdenv buildLlvmPackages.clangWithLibcAndBasicRtAndLibcxx
             else
               args.stdenv;
         in
