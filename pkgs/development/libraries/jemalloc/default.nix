@@ -22,8 +22,8 @@ stdenv.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "facebook";
     repo = "jemalloc";
-    rev = "fb52eac3720b09b4fc163878e7770336f1b6e7f8";
-    hash = "sha256-cVBGo3Qm7jxiJE1qWjiSByXlQvRuGoS+yyGTu3GhA0o=";
+    rev = "f9fae9f1f841f8c6c566746480865da8ae3a1d11";
+    hash = "sha256-gH/8mAenrRIyBF96ADq9AHucpvU6255hey6APgR/bT4=";
     # TODO: upstream to nixpkgs: https://github.com/facebook/jemalloc/issues/15
     # tag = version;
   };
