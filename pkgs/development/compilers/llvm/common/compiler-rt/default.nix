@@ -68,8 +68,16 @@ let
     stdenv.hostPlatform.isDarwin
     && stdenv.hostPlatform.isStatic
     && lib.versionAtLeast release_version "16";
-  inherit (stdenv.hostPlatform) isMusl isAarch64 isWindows;
-  noSanitizers = !haveLibc || bareMetal || isMusl || isDarwinStatic || isWindows;
+  inherit (stdenv.hostPlatform)
+    isMusl
+    isAarch64
+    isWindows
+    isAndroid
+    ;
+  # On Android there's a weird error stating SSIZE_MAX doesn't exist.
+  # https://github.com/NixOS/nixpkgs/issues/380604#issuecomment-3159316203
+  # TODO: Figure out how to build sanitizers for Android
+  noSanitizers = !haveLibc || bareMetal || isMusl || isDarwinStatic || isWindows || isAndroid;
 in
 
 stdenv.mkDerivation (finalAttrs: {
@@ -162,6 +170,9 @@ stdenv.mkDerivation (finalAttrs: {
     })
     ++ lib.optionals (lib.versionAtLeast release_version "20") [
       (getVersionFile "compiler-rt/libc-free.patch")
+    ]
+    ++ lib.optional (!haveLibc && isAndroid) [
+      ./no-libc-android.patch
     ];
 
   nativeBuildInputs = [
@@ -344,7 +355,8 @@ stdenv.mkDerivation (finalAttrs: {
     lib.optionalString (stdenv.hostPlatform.isDarwin) ''
       ln -s "$out/lib"/*/* "$out/lib"
     ''
-    + lib.optionalString (useLLVM && stdenv.hostPlatform.isLinux) ''
+    # `!isAndroid`: CRT isn't built with compiler-rt on Android
+    + lib.optionalString (useLLVM && stdenv.hostPlatform.isLinux && !isAndroid) ''
       ln -s $out/lib/*/clang_rt.crtbegin-*.o $out/lib/crtbegin.o
       ln -s $out/lib/*/clang_rt.crtend-*.o $out/lib/crtend.o
       # Note the history of crt{begin,end}S in previous versions of llvm in nixpkg:
