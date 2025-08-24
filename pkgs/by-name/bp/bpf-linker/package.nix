@@ -5,6 +5,7 @@
   fetchFromGitHub,
   btfdump,
   rustc,
+  llvmPackages,
   zlib,
   libxml2,
 }:
@@ -26,6 +27,9 @@ rustPlatform.buildRustPackage rec {
   buildFeatures = [ "llvm-${lib.versions.major rustc.llvm.version}" ];
 
   nativeBuildInputs = [ rustc.llvm ];
+
+
+  nativeBuildInputs = [ llvmPackages.llvm ];
 
   buildInputs = [
     zlib
