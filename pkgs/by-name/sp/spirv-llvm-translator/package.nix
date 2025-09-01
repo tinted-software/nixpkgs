@@ -22,10 +22,11 @@ let
       version = "20.1.4";
       rev = "v${version}";
       hash = "sha256-i7AwNSQ4lipHjDya6mwcuwKxOa04x77clY5pkME3RRg=";
+    };
     "21" = rec {
-      version = "21.1.0-unstable-2025-07-21";
-      rev = "9413a66e04ba34f429b05efe00adff0c1f1e0a58";
-      hash = "sha256-sVHIQ6z/G0ZiuUoNEfSeOvC+rD+gd7rmdO+BBCXyCJk=";
+      version = "21.1.0";
+      rev = "v${version}";
+      hash = "sha256-kk8BbPl/UBW1gaO/cuOQ9OsiNTEk0TkvRDLKUAh6exk=";
     };
     "19" = rec {
       version = "19.1.6";
