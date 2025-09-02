@@ -1,15 +1,15 @@
 diff --git a/Modules/Platform/Darwin.cmake b/Modules/Platform/Darwin.cmake
-index 97e972a31f..f13e70322a 100644
+index 42c6b354..c365bea9 100644
 --- a/Modules/Platform/Darwin.cmake
 +++ b/Modules/Platform/Darwin.cmake
 @@ -47,9 +47,7 @@ set(CMAKE_APPLE_IMPORT_FILE_PREFIX "lib")
  set(CMAKE_APPLE_IMPORT_FILE_SUFFIX ".tbd")
  set(CMAKE_MODULE_EXISTS 1)
  set(CMAKE_DL_LIBS "")
--if(NOT "${_CURRENT_OSX_VERSION}" VERSION_LESS "10.5")
+-if(NOT (DEFINED _CMAKE_HOST_OSX_VERSION AND _CMAKE_HOST_OSX_VERSION VERSION_LESS "10.5"))
 -  set(CMAKE_SHARED_LIBRARY_RUNTIME_C_FLAG "-Wl,-rpath,")
 -endif()
 +set(CMAKE_SHARED_LIBRARY_RUNTIME_C_FLAG "-Wl,-rpath,")
- 
+
  foreach(lang C CXX OBJC OBJCXX)
    set(CMAKE_${lang}_OSX_COMPATIBILITY_VERSION_FLAG "-compatibility_version ")
