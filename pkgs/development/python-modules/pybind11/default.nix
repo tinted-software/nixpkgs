@@ -10,7 +10,7 @@
   boost,
   eigen,
   python,
-  catch,
+  catch2,
   numpy,
   pytestCheckHook,
   libxcrypt,
@@ -76,7 +76,7 @@ buildPythonPackage rec {
   '';
 
   nativeCheckInputs = [
-    catch
+    catch2
     numpy
     pytestCheckHook
   ];
