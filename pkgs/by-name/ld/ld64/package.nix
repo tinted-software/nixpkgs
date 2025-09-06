@@ -12,6 +12,7 @@
   pkg-config,
   stdenv,
   xar,
+  libxml2,
 }:
 
 let
@@ -115,6 +116,7 @@ stdenv.mkDerivation (finalAttrs: {
     llvm
     openssl
     xar
+    libxml2
   ];
 
   dontUseCmakeConfigure = true; # CMake is only needed because it’s used by Meson to find LLVM.
