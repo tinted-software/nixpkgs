@@ -41,7 +41,7 @@
   alsaSupport ? stdenv.hostPlatform.isLinux && !stdenv.hostPlatform.isAndroid,
   dbusSupport ? stdenv.hostPlatform.isLinux && !stdenv.hostPlatform.isAndroid,
   drmSupport ? stdenv.hostPlatform.isLinux && !stdenv.hostPlatform.isAndroid,
-  ibusSupport ? stdenv.hostPlatform.isUnix && !stdenv.hostPlatform.isDarwin,
+  ibusSupport ? stdenv.hostPlatform.isUnix && !stdenv.hostPlatform.isDarwin && !stdenv.hostPlatform.isAndroid,
   jackSupport ? stdenv.hostPlatform.isLinux && !stdenv.hostPlatform.isAndroid,
   libdecorSupport ? stdenv.hostPlatform.isLinux && !stdenv.hostPlatform.isAndroid,
   openglSupport ? lib.meta.availableOn stdenv.hostPlatform libGL,
