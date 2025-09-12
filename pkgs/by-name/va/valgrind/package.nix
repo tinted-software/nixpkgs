@@ -3,6 +3,7 @@
   stdenv,
   fetchurl,
   fetchpatch,
+  darwin,
   autoreconfHook,
   perl,
   gdb,
@@ -49,37 +50,39 @@ stdenv.mkDerivation rec {
   # GDB is needed to provide a sane default for `--db-command'.
   # Perl is needed for `callgrind_{annotate,control}'.
 
-  buildInputs =
+  buildInputs = [
+    gdb
+    perl
+  ]
+  ++ lib.optionals (stdenv.hostPlatform.isDarwin) (
+    with darwin;
     [
-      gdb
-      perl
-    ]
-    ++ lib.optionals (stdenv.hostPlatform.isDarwin) [
       bootstrap_cmds
       xnu
     ]
-    ++ lib.optional (stdenv.targetPlatform.useLLVM or false) (
-      (llvmPackages.compiler-rt-no-libc.override {
-        # valgrind explictly expects libgcc which isn't available under LLVM.
-        # Force using compiler-rt as a replacement.
-        doFakeLibgcc = true;
-        # Disable sanitizers for compiler-rt so we can actually link statically.
-        stdenv = llvmPackages.compiler-rt-no-libc.stdenv.override {
-          hostPlatform = llvmPackages.compiler-rt-no-libc.stdenv.hostPlatform // {
-            parsed = {
-              kernel.name = "none";
-              inherit (llvmPackages.compiler-rt-no-libc.stdenv.hostPlatform.parsed) cpu;
-            };
-            useLLVM = false;
+  )
+  ++ lib.optional (stdenv.targetPlatform.useLLVM or false) (
+    (llvmPackages.compiler-rt-no-libc.override {
+      # valgrind explictly expects libgcc which isn't available under LLVM.
+      # Force using compiler-rt as a replacement.
+      doFakeLibgcc = true;
+      # Disable sanitizers for compiler-rt so we can actually link statically.
+      stdenv = llvmPackages.compiler-rt-no-libc.stdenv.override {
+        hostPlatform = llvmPackages.compiler-rt-no-libc.stdenv.hostPlatform // {
+          parsed = {
+            kernel.name = "none";
+            inherit (llvmPackages.compiler-rt-no-libc.stdenv.hostPlatform.parsed) cpu;
           };
+          useLLVM = false;
         };
-      }).overrideAttrs
-        (
-          f: p: {
-            hardeningDisable = p.hardeningDisable or [ ] ++ [ "stackprotector" ];
-          }
-        )
-    );
+      };
+    }).overrideAttrs
+      (
+        f: p: {
+          hardeningDisable = p.hardeningDisable or [ ] ++ [ "stackprotector" ];
+        }
+      )
+  );
 
   # Perl is also a native build input.
   nativeBuildInputs = [
@@ -145,7 +148,7 @@ stdenv.mkDerivation rec {
     platforms =
       with lib.platforms;
       lib.intersectLists (x86 ++ power ++ s390x ++ armv7 ++ aarch64 ++ mips ++ riscv64) (
-        darwin ++ freebsd ++ illumos ++ linux
+        lib.platforms.darwin ++ freebsd ++ illumos ++ linux
       );
     badPlatforms = [ lib.systems.inspect.platformPatterns.isStatic ];
     # See: <https://hydra.nixos.org/build/128521440/nixlog/2>
