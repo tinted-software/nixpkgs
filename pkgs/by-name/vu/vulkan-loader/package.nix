@@ -12,6 +12,7 @@
   vulkan-headers,
   addDriverRunpath,
   enableX11 ? stdenv.hostPlatform.isLinux,
+  enableWayland ? false,
   testers,
 }:
 
@@ -40,7 +41,7 @@ stdenv.mkDerivation (finalAttrs: {
     libxcb
     libXrandr
   ]
-  ++ lib.optionals stdenv.hostPlatform.isLinux [
+  ++ lib.optionals enableWayland [
     wayland
   ];
 
