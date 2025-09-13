@@ -191,7 +191,6 @@ stdenv.mkDerivation (finalAttrs: {
     [
       (lib.cmakeFeature "CMAKE_LIPO" "${lib.getBin stdenv.cc.bintools.bintools}/bin/${stdenv.cc.targetPrefix}lipo")
     ]
-<<<<<<< HEAD
     ++ lib.optionals (!haveLibcxx) [
       # Darwin fails to detect that the compiler supports the `-g` flag when there is no libc++ during the
       # compiler-rt bootstrap, which prevents compiler-rt from building. The `-g` flag is required by the
