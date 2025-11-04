@@ -45,8 +45,7 @@ stdenv.mkDerivation (finalAttrs: {
   # * <https://github.com/doctest/doctest/pull/929>
   # * <https://github.com/doctest/doctest/issues/950>
   env.NIX_CFLAGS_COMPILE = lib.concatStringsSep " " [
-    "-Wno-error=nrvo"
-    "-Wno-error=missing-noreturn"
+    "-Wno-error"
   ];
 
   meta = {
