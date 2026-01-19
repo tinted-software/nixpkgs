@@ -99,6 +99,15 @@ rec {
     useLLVM = true;
   };
 
+  x86_64-android = {
+    config = "aarch64-unknown-linux-android";
+    androidSdkVersion = "35";
+    androidNdkVersion = "27";
+    libc = "bionic";
+    useAndroidPrebuilt = false;
+    useLLVM = true;
+  };
+
   pogoplug4 = {
     config = "armv5tel-unknown-linux-gnueabi";
   }
