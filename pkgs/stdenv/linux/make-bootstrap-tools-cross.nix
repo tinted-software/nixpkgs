@@ -44,5 +44,9 @@ lib.mapAttrs (n: make) (
     armv6l-unknown-linux-musleabihf = muslpi;
     riscv64-unknown-linux-musl = riscv64-musl;
     x86_64-unknown-linux-musl = musl64;
+
+    # android
+    x86_64-unknown-linux-android = x86_64-android;
+    aarch64-unknown-linux-android = aarch64-android;
   }
 )

@@ -29,6 +29,8 @@ let
       import ./glibc.nix args
     else if libc == "musl" then
       import ./musl.nix args
+    else if libc == "bionic" then
+      import ./bionic.nix args
     else
       throw "unsupported libc";
 in
