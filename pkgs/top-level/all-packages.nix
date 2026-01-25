@@ -6507,7 +6507,7 @@ with pkgs;
     else if libc == "relibc" then
       relibc
     else if libc == "llvm" then
-      llvmPackages_20.libc
+      llvmPackages.libc
     else
       throw "Unknown libc ${libc}";
 
