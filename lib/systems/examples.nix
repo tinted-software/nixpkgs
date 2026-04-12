@@ -179,6 +179,11 @@ rec {
     libc = "newlib";
   };
 
+  esp32-embedded = {
+    config = "xtensa-esp32-none-elf";
+    libc = null;
+  };
+
   riscv32-embedded = {
     config = "riscv32-none-elf";
     libc = "newlib";
