@@ -16,24 +16,20 @@
 let
 
   pname = "freelens-bin";
-  version = "1.10.1";
+  version = "1.10.3";
 
   sources = {
     x86_64-linux = {
       url = "https://github.com/freelensapp/freelens/releases/download/v${version}/Freelens-${version}-linux-amd64.AppImage";
-      hash = "sha256-Hbu28vbgaSEjJTAVSfHJ3cZGd2PRU0ex7dNv0wo1SrI=";
+      hash = "sha256-W+RokOsT4WdVm4Yrmm8kbu7ApydhwLPpGmRjKTI1gek=";
     };
     aarch64-linux = {
       url = "https://github.com/freelensapp/freelens/releases/download/v${version}/Freelens-${version}-linux-arm64.AppImage";
-      hash = "sha256-JrApeOjMXNNi/wCq6vY6rYpPGgMWti0H+2i7QNEXaTc=";
-    };
-    x86_64-darwin = {
-      url = "https://github.com/freelensapp/freelens/releases/download/v${version}/Freelens-${version}-macos-amd64.dmg";
-      hash = "sha256-BIBEaQFny/DvzrvsC38UPiIqBFaxUO/DOVQTIe2gL+Q=";
+      hash = "sha256-2aAw90YfTPDkiehj1ziurBeILEuEOmbJeUV2d7Bbmo4=";
     };
     aarch64-darwin = {
       url = "https://github.com/freelensapp/freelens/releases/download/v${version}/Freelens-${version}-macos-arm64.dmg";
-      hash = "sha256-5duswriuDmL92tXqLckBhH2RMPFDqFRG/WW9oYMClGY=";
+      hash = "sha256-rjPhHV24WNofZK4sT3yjg1eGeAvLKvAuVf51bwiQBBk=";
     };
   };
 

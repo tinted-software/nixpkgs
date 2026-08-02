@@ -43,6 +43,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
       installShellCompletion --cmd starship \
         --bash <(${emulator} $out/bin/starship completions bash) \
         --fish <(${emulator} $out/bin/starship completions fish) \
+        --nushell <(${emulator} $out/bin/starship completions nushell) \
         --zsh <(${emulator} $out/bin/starship completions zsh)
     ''
   );
@@ -65,7 +66,6 @@ rustPlatform.buildRustPackage (finalAttrs: {
     changelog = "https://github.com/starship/starship/releases/tag/v${finalAttrs.version}";
     license = lib.licenses.isc;
     maintainers = with lib.maintainers; [
-      danth
       Frostman
       da157
       sigmasquadron

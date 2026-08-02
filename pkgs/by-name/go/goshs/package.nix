@@ -3,21 +3,31 @@
   stdenv,
   buildGoModule,
   fetchFromGitHub,
+  fetchpatch2,
   versionCheckHook,
 }:
 
 buildGoModule (finalAttrs: {
   pname = "goshs";
-  version = "2.1.3";
+  version = "2.1.4";
 
   src = fetchFromGitHub {
-    owner = "patrickhener";
+    owner = "goshs-labs";
     repo = "goshs";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-bAYnwOg7CHZOKHl8pCC2IDdCkUGsw0A3e47gSuGwuig=";
+    hash = "sha256-8xSYdLO+2AB044sV3JJw0RXB0RuLQ7eIzWvwgoJdp5k=";
   };
 
-  vendorHash = "sha256-CAl4yYAM/GQaLbUUNjgMN6A3Vqw4D+kpG9G2WXw6mRU=";
+  vendorHash = "sha256-yKNJHs6A7Du9NvGOpwaDmABz6SBMPVzJNoQb7W32IfA=";
+
+  patches = [
+    # Remove when updating to 2.1.5 or later.
+    (fetchpatch2 {
+      name = "CVE-2026-66063+CVE-2026-66064.patch";
+      url = "https://github.com/goshs-labs/goshs/commit/f3ef599e409151d1380866e47de8b1afb0bb54fa.patch?full_index=1";
+      hash = "sha256-fIKeqWKraaLcocp7aaWE58ffkA1/2NVwR7KMmJfXL5g=";
+    })
+  ];
 
   ldflags = [ "-s" ];
 
@@ -43,7 +53,7 @@ buildGoModule (finalAttrs: {
   meta = {
     description = "Simple, yet feature-rich web server written in Go";
     homepage = "https://goshs.de";
-    changelog = "https://github.com/patrickhener/goshs/releases/tag/${finalAttrs.src.rev}";
+    changelog = "https://github.com/goshs-labs/goshs/releases/tag/${finalAttrs.src.rev}";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [
       fab

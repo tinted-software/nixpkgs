@@ -1174,6 +1174,9 @@ let
           # https://github.com/PythonNut/evil-easymotion/issues/74
           evil-easymotion = addPackageRequires super.evil-easymotion [ self.evil ];
 
+          # tightly coupled to ghostel (from manual-packages), use the same source
+          evil-ghostel = externalSrc super.evil-ghostel self.ghostel;
+
           evil-mu4e = addPackageRequires super.evil-mu4e [ self.mu4e ];
 
           # https://github.com/VanLaser/evil-nl-break-undo/issues/2
@@ -1702,6 +1705,9 @@ let
           shadchen = ignoreCompilationError super.shadchen; # elisp error
 
           shampoo = ignoreCompilationError super.shampoo; # elisp error
+
+          # missing optional dependencies
+          shexc-ts-mode = addPackageRequires super.shexc-ts-mode [ self.yaml ];
 
           # missing optional dependencies and one of them (mew) is not on any ELPA
           shimbun = ignoreCompilationError (

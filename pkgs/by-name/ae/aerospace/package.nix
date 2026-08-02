@@ -9,7 +9,7 @@
 
 let
   appName = "AeroSpace.app";
-  version = "0.21.0-Beta";
+  version = "0.21.3-Beta";
 in
 stdenv.mkDerivation {
   pname = "aerospace";
@@ -18,7 +18,7 @@ stdenv.mkDerivation {
 
   src = fetchzip {
     url = "https://github.com/nikitabobko/AeroSpace/releases/download/v${version}/AeroSpace-v${version}.zip";
-    sha256 = "sha256-z55eInxpFr+ZjyG2lottTZE9VyD0YVEZfZnjZ32w/c8=";
+    sha256 = "sha256-JHXtF3IKUbge7z2cMBi4L9IruiByNPCIKugLe4ymvys=";
   };
 
   nativeBuildInputs = [ installShellFiles ];

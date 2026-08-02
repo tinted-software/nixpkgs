@@ -52,7 +52,7 @@
 
 let
   pname = "mongodb-compass";
-  version = "1.49.9";
+  version = "1.49.10";
 
   selectSystem =
     attrs:
@@ -62,14 +62,12 @@ let
     url = "https://downloads.mongodb.com/compass/${
       selectSystem {
         x86_64-linux = "mongodb-compass_${version}_amd64.deb";
-        x86_64-darwin = "mongodb-compass-${version}-darwin-x64.zip";
         aarch64-darwin = "mongodb-compass-${version}-darwin-arm64.zip";
       }
     }";
     hash = selectSystem {
-      x86_64-linux = "sha256-Fx//NMDHqVaLwthOM7FeSgUXkvLOSbw5EH1qp1dgPcM=";
-      x86_64-darwin = "sha256-l5Jx0BUQR++tkF0cpctxhku6lB2rHEydp7roJy9AGFc=";
-      aarch64-darwin = "sha256-HCKt1rq6P7Uy6NJiFRBBp4YdpAdhwQQjEGT5h7IcyWE=";
+      x86_64-linux = "sha256-faD8sIbnho5urBWE0btcmD7tXT8eQCNyJYzpIyI+bA4=";
+      aarch64-darwin = "sha256-HGOJPYC4+CgLQQ3BNUTNZUln5oqPkC8ewHft99LCZQ8=";
     };
   };
 
@@ -197,7 +195,6 @@ stdenv.mkDerivation (finalAttrs: {
     platforms = [
       "x86_64-linux"
       "aarch64-darwin"
-      "x86_64-darwin"
     ];
   };
 })
